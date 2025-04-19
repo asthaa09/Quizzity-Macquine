@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compatibility Quiz | Quizzity Macquine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .quiz-container { max-width: 700px; margin: 3rem auto; text-align: left; }
+    .question { font-size: 1.25rem; margin-bottom: 1rem; }
+    .answer-pair { display: flex; gap: 1rem; margin-bottom: 1rem; }
+    .btn { margin-top: 1.5rem; }
+    .result { font-size: 1.2rem; margin-top: 2rem; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <header><div class="logo">Quizzity Macquine</div>
+  <nav><a href="index.html">Home</a><a href="quizzes.html">Quizzes</a><a href="#">About</a><a href="#">Contact</a></nav></header>
+  <main>
+    <h1>Compatibility Quiz for Couples</h1>
+    <div class="quiz-container" id="quiz">
+      <div class="question" id="question">Loading...</div>
+      <div class="answer-pair" id="answers">
+        <input type="text" id="a1" placeholder="Partner A's answer" />
+        <input type="text" id="a2" placeholder="Partner B's answer" />
+      </div>
+      <button class="btn" onclick="nextQuestion()">Next</button>
+      <div class="result" id="result"></div>
+    </div>
+  </main>
+  <script>
+    const quizData = [
+      "What's your ideal date night?",
+      "Favorite food?",
+      "Dream vacation destination?",
+      "What's your love language?",
+      "Morning or night person?",
+      "Favorite movie genre?",
+      "How do you handle stress?",
+      "Favorite hobby?",
+      "What's most important in a relationship?",
+      "What's your idea of fun?"
+    ];
+    let currentQuestion = 0;
+    let score = 0;
+    function loadQuestion() {
+      document.getElementById("question").innerText = quizData[currentQuestion];
+      document.getElementById("a1").value = "";
+      document.getElementById("a2").value = "";
+      document.getElementById("result").innerText = "";
+    }
+    function nextQuestion() {
+      const val1 = document.getElementById("a1").value.trim().toLowerCase();
+      const val2 = document.getElementById("a2").value.trim().toLowerCase();
+      if (!val1 || !val2) {
+        alert("Both partners must answer.");
+        return;
+      }
+      if (val1 === val2) score++;
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+    function showResult() {
+      document.getElementById("question").style.display = "none";
+      document.getElementById("answers").style.display = "none";
+      document.querySelector("button").style.display = "none";
+      const percentage = Math.floor((score / quizData.length) * 100);
+      document.getElementById("result").innerText = `You are ${percentage}% compatible! 💑`;
+    }
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
